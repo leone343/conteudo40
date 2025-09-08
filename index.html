@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acesso ao Conteúdo</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0d1117, #161b22);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
+    }
+
+    .card {
+      background-color: #1c1f26;
+      padding: 30px 25px;
+      border-radius: 15px;
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 0 25px rgba(0, 208, 132, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 10px;
+      color: #00d084;
+    }
+
+    .linha {
+      width: 60px;
+      height: 3px;
+      background-color: #00d084;
+      margin: 0 auto 20px auto;
+      border-radius: 3px;
+    }
+
+    .explicacao {
+      font-size: 15px;
+      color: #ccc;
+      line-height: 1.8;
+      margin-bottom: 25px;
+      text-align: left;
+    }
+
+    .explicacao ol {
+      padding-left: 20px;
+    }
+
+    .explicacao li {
+      margin-bottom: 10px;
+    }
+
+    #btnAnuncio {
+      background-color: #00d084;
+      color: #fff;
+      border: none;
+      padding: 16px 40px;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(0, 208, 132, 0.6);
+      animation: pulsar 1.2s infinite;
+      transition: 0.3s;
+    }
+
+    #btnAnuncio:hover {
+      background-color: #00b374;
+      transform: scale(1.05);
+    }
+
+    @keyframes pulsar {
+      0% { transform: scale(1); box-shadow: 0 0 15px rgba(0, 208, 132, 0.5); }
+      50% { transform: scale(1.08); box-shadow: 0 0 30px rgba(0, 208, 132, 0.9); }
+      100% { transform: scale(1); box-shadow: 0 0 15px rgba(0, 208, 132, 0.5); }
+    }
+
+    #contador {
+      margin-top: 20px;
+      font-size: 16px;
+      display: none;
+      color: #00ff80;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>🔓 Acesso ao Conteúdo</h1>
+    <div class="linha"></div>
+
+    <p class="explicacao">
+      Siga os passos abaixo para desbloquear o conteúdo:
+    </p>
+
+    <ol class="explicacao">
+      <li>Clique no botão <strong>"Ver Anúncio"</strong>.</li>
+      <li>Aguarde <strong>10 segundos com o anúncio aberto</strong>.</li>
+      <li>Depois, feche o anúncio e o conteúdo será liberado automaticamente.</li>
+    </ol>
+
+    <button id="btnAnuncio">🚀 Ver Anúncio</button>
+    <p id="contador">⏳ Aguarde <span id="segundos">10</span> segundos...</p>
+  </div>
+
+  <script>
+    const botao = document.getElementById("btnAnuncio");
+    const contador = document.getElementById("contador");
+    const segundosSpan = document.getElementById("segundos");
+
+    const anuncioLink = "https://otieu.com/4/9645676";
+    const conteudoLink = "https://t.me/+z-i6AW_pVExmYTkx";
+
+    let tempo = 10;
+    let intervalo = null;
+    let contagemIniciada = false;
+
+    function iniciarContagem() {
+      if (contagemIniciada) return;
+      contagemIniciada = true;
+      contador.style.display = "block";
+
+      intervalo = setInterval(() => {
+        tempo--;
+        segundosSpan.textContent = tempo;
+        if (tempo <= 0) {
+          clearInterval(intervalo);
+          window.location.href = conteudoLink;
+        }
+      }, 1000);
+    }
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        iniciarContagem();
+      } else {
+        if (tempo > 0 && tempo < 10) {
+          clearInterval(intervalo);
+          tempo = 10;
+          segundosSpan.textContent = tempo;
+          contagemIniciada = false;
+          contador.style.display = "none";
+        }
+      }
+    });
+
+    botao.addEventListener("click", () => {
+      window.open(anuncioLink, "_blank");
+    });
+  </script>
+
+</body>
+</html>
+
