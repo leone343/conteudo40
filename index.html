@@ -11,6 +11,10 @@
       box-sizing: border-box;
     }
 
+    html, body {
+      height: 100%;
+    }
+
     body {
       background: linear-gradient(135deg, #0d1117, #161b22);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -18,30 +22,28 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      padding: 20px;
+      padding: 10px;
+      text-align: center;
     }
 
     .card {
       background-color: #1c1f26;
-      padding: 30px 25px;
+      padding: 40px 20px;
       border-radius: 15px;
-      text-align: center;
       width: 100%;
-      max-width: 400px;
+      max-width: 500px;
+      min-height: 85vh; /* Preenche quase toda a tela */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       box-shadow: 0 0 25px rgba(0, 208, 132, 0.15);
       border: 1px solid rgba(255, 255, 255, 0.05);
-      animation: fadeIn 0.6s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
     }
 
     h1 {
-      font-size: 26px;
-      margin-bottom: 10px;
+      font-size: 28px;
+      margin-bottom: 15px;
       color: #00d084;
     }
 
@@ -54,33 +56,35 @@
     }
 
     .explicacao {
-      font-size: 15px;
+      font-size: 16px;
       color: #ccc;
       line-height: 1.8;
       margin-bottom: 25px;
-      text-align: left;
+      text-align: center;
     }
 
     .explicacao ol {
-      padding-left: 20px;
+      padding-left: 0; /* remove espaço extra */
+      list-style-position: inside; /* números colados na frase */
     }
 
     .explicacao li {
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     #btnAnuncio {
       background-color: #00d084;
       color: #fff;
       border: none;
-      padding: 16px 40px;
-      font-size: 18px;
+      padding: 20px 50px;
+      font-size: 20px;
       font-weight: bold;
       border-radius: 12px;
       cursor: pointer;
-      box-shadow: 0 0 20px rgba(0, 208, 132, 0.6);
+      box-shadow: 0 0 25px rgba(0, 208, 132, 0.6);
       animation: pulsar 1.2s infinite;
       transition: 0.3s;
+      margin-top: 20px;
     }
 
     #btnAnuncio:hover {
@@ -90,16 +94,24 @@
 
     @keyframes pulsar {
       0% { transform: scale(1); box-shadow: 0 0 15px rgba(0, 208, 132, 0.5); }
-      50% { transform: scale(1.08); box-shadow: 0 0 30px rgba(0, 208, 132, 0.9); }
+      50% { transform: scale(1.08); box-shadow: 0 0 35px rgba(0, 208, 132, 0.9); }
       100% { transform: scale(1); box-shadow: 0 0 15px rgba(0, 208, 132, 0.5); }
     }
 
     #contador {
       margin-top: 20px;
-      font-size: 16px;
+      font-size: 18px;
       display: none;
       color: #00ff80;
       font-weight: bold;
+    }
+
+    /* Responsivo para celulares */
+    @media (max-width: 480px) {
+      h1 { font-size: 24px; }
+      .explicacao { font-size: 15px; }
+      #btnAnuncio { padding: 18px 40px; font-size: 18px; }
+      .card { padding: 30px 15px; min-height: 85vh; }
     }
   </style>
 </head>
@@ -134,9 +146,12 @@
     let tempo = 10;
     let intervalo = null;
     let contagemIniciada = false;
+    let clicouNoBotao = false; // FLAG: só iniciar se clicou no botão
 
     function iniciarContagem() {
+      if (!clicouNoBotao) return; // não inicia sem clique
       if (contagemIniciada) return;
+
       contagemIniciada = true;
       contador.style.display = "block";
 
@@ -165,10 +180,10 @@
     });
 
     botao.addEventListener("click", () => {
+      clicouNoBotao = true; // marca que o botão foi clicado
       window.open(anuncioLink, "_blank");
     });
   </script>
 
 </body>
 </html>
-
